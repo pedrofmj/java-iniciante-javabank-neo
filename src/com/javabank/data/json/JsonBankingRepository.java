@@ -23,6 +23,7 @@ public class JsonBankingRepository<T> {
 
     public JsonBankingRepository(String name, T data, Type type) {
         this.name = name;
+        this.filepath = String.format("data/%s.json", this.name);
         this.type = type;
         this.data = data;
     }
