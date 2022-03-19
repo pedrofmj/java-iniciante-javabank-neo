@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="java-iniciante-javabank-neo:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/java_iniciante_javabank_neo_jar</output-path>
+    <root id="archive" name="java-iniciante-javabank-neo.jar">
+      <element id="module-output" name="java-iniciante-javabank-neo" />
+    </root>
+  </artifact>
+</component>
