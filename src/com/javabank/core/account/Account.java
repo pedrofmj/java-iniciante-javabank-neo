@@ -15,6 +15,20 @@ public class Account {
 
     protected transient JsonBankingRepository<Account> repository = null;
 
+    public static boolean exists(String brand, String name) {
+        return JsonBankingRepository.exists(String.format("account-%s-%s", brand, name));
+    }
+
+    public static Account get(String brand, String name) {
+        if (!exists(brand, name)) {
+            return null;
+        }
+        JsonBankingRepository<Account> repository = new JsonBankingRepository<Account>(String.format("account-%s-%s", brand, name), Account.class);
+        Account account = repository.getData();
+        account.setRepository(repository);
+        return account;
+    }
+
     public Account(String name, String displayName, double ballance) {
         this.name = name;
         this.displayName = displayName;
@@ -85,20 +99,18 @@ public class Account {
         this.repository = repository;
     }
 
-    public void addStatementEntry(Date date, String description, double value) {
+    public void operationWithdraw(double value) {
+        addStatementEntry("WITHDRAW", -value);
+    }
 
-        this.ballance += value;
+    public void operationDeposit(double value) {
+        addStatementEntry("DEPOSIT", value);
+    }
 
-        getStatement().addEntry(date, description, value);
-
-        try {
-            if (this.repository != null) {
-                this.repository.save();
-            }
-        } catch (Throwable t) {
-            // NOTHING
-        }
-
+    public void operationTransferTEF(Account destinationAccount, double value) {
+        Date now = new Date();
+        addStatementEntry(now, String.format("TRANSFER TO BRAND %s ACCOUNT %s", destinationAccount.getBrand(), destinationAccount.getName()), -value);
+        destinationAccount.addStatementEntry(now, String.format("TRANSFER FROM BRAND %s ACCOUNT %s", getBrand(), getName()), value);
     }
 
     public void addStatementEntry(String description, double value) {
@@ -113,6 +125,22 @@ public class Account {
             }
         } catch (Throwable t) {
             t.printStackTrace();
+            // NOTHING
+        }
+
+    }
+
+    public void addStatementEntry(Date date, String description, double value) {
+
+        this.ballance += value;
+
+        getStatement().addEntry(date, description, value);
+
+        try {
+            if (this.repository != null) {
+                this.repository.save();
+            }
+        } catch (Throwable t) {
             // NOTHING
         }
 

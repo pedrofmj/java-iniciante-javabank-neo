@@ -2,6 +2,7 @@ package com.javabank;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.javabank.com.javabank.core.transaction.console.TransactionConsole;
 import com.javabank.core.account.Account;
 import com.javabank.data.json.JsonBankingRepository;
 import com.javabank.gson.GsonSingleton;
@@ -11,6 +12,10 @@ import java.util.HashMap;
 public class Main {
 
     public static void main(String[] args) {
+        TransactionConsole.main(args);
+    }
+
+    public static void main_account(String[] args) {
 
         Account account1 = null;
         Account account2 = null;
