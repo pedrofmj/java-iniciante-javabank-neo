@@ -43,4 +43,8 @@ public class AccountStatement {
         addEntry(entry);
     }
 
+    public List<AccountStatementEntry> getEntries() {
+        return this.entries;
+    }
+
 }

@@ -2,7 +2,9 @@ package com.javabank.com.javabank.core.transaction.console;
 
 import com.javabank.com.javabank.core.transaction.Transaction;
 import com.javabank.core.account.Account;
+import com.javabank.core.account.AccountStatementEntry;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -44,7 +46,17 @@ public class TransactionConsole {
                             System.out.println(String.format(Locale.US, "CURRENT BALLANCE: %.2f", currentAccount.getBallance()));
                         }
                         break;
-                    case "2": // WITHDRAW
+                    case "2": // GET STATEMENT
+                        {
+                            System.out.println();
+                            System.out.println("ACCOUNT STATEMENT");
+                            System.out.println();
+                            for (AccountStatementEntry entry : currentAccount.getStatement().getEntries()) {
+                                System.out.println(String.format("%s\t%s\t%.2f", entry.getDate().toString(), entry.getDescription(), entry.getValue()));
+                            }
+                        }
+                        break;
+                    case "3": // WITHDRAW
                         {
                             System.out.println("ENTER AMMOUT:");
                             double ammount = scanner.nextDouble();
@@ -52,7 +64,7 @@ public class TransactionConsole {
                             currentAccount.operationWithdraw(ammount);
                         }
                         break;
-                    case "3": // DEPOSIT
+                    case "4": // DEPOSIT
                         {
                             System.out.println("ENTER AMMOUT:");
                             double ammount = scanner.nextDouble();
@@ -60,7 +72,7 @@ public class TransactionConsole {
                             currentAccount.operationDeposit(ammount);
                         }
                         break;
-                    case "4": // TRASFER TEF
+                    case "5": // TRASFER TEF
                         {
                             System.out.println();
                             System.out.println("ENTER DESTINATION ACCOUNT BRAND: ");
@@ -78,14 +90,14 @@ public class TransactionConsole {
                             }
                         }
                         break;
-                    case "5": // TRANSFER PIX
+                    case "6": // TRANSFER PIX
                         break;
-                    case "6": // LOGOUT
+                    case "7": // LOGOUT
                         {
                             currentAccount = null;
                         }
                         break;
-                    case "7": // EXIT
+                    case "8": // EXIT
                         {
                             running = false;
                         }
@@ -94,12 +106,13 @@ public class TransactionConsole {
                         {
                             System.out.println();
                             System.out.println("1 - BALLANCE");
-                            System.out.println("2 - WITHDRAW");
-                            System.out.println("3 - DEPOSIT");
-                            System.out.println("4 - TRANSFER TEF");
-                            System.out.println("5 - TRANSFER PIX");
-                            System.out.println("6 - LOGOUT");
-                            System.out.println("7 - EXIT");
+                            System.out.println("2 - STATEMENT");
+                            System.out.println("3 - WITHDRAW");
+                            System.out.println("4 - DEPOSIT");
+                            System.out.println("5 - TRANSFER TEF");
+                            System.out.println("6 - TRANSFER PIX");
+                            System.out.println("7 - LOGOUT");
+                            System.out.println("8 - EXIT");
                         }
                         break;
                 }
